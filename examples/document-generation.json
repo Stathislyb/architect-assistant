@@ -1,0 +1,132 @@
+{
+  "project": "document-generation-demo",
+  "version": "0.1.0",
+  "layers": [
+    {
+      "id": "development-baseline",
+      "version": "0.1.0",
+      "kind": "baseline",
+      "status": "approved",
+      "rules": [
+        {
+          "id": "BASE_DRY",
+          "title": "Keep business rules in one authoritative place",
+          "guidance": "SHOULD reuse an existing business rule implementation rather than duplicate it. Introduce shared abstractions only when the shared responsibility is clear; incidental similarity alone does not justify coupling unrelated features.",
+          "rationale": "Avoid inconsistent business behavior without premature abstraction.",
+          "source": "Fictional demo baseline v0.1.0: duplication",
+          "strength": "should"
+        },
+        {
+          "id": "BASE_RESPONSIBILITY",
+          "title": "Separate responsibilities",
+          "guidance": "SHOULD separate document configuration validation, document rendering, and integration IO into focused responsibilities. Keep methods focused on one coherent operation; do not use arbitrary line-count limits as a substitute for responsibility boundaries.",
+          "rationale": "Make changes understandable and independently testable.",
+          "source": "Fictional demo baseline v0.1.0: responsibilities",
+          "strength": "should"
+        },
+        {
+          "id": "BASE_DEPENDENCIES",
+          "title": "Keep domain logic independent of integration implementations",
+          "guidance": "MUST keep domain logic independent of concrete network and storage implementations. Define integration interfaces at the application boundary and supply implementations through dependency injection at the composition root.",
+          "rationale": "Allow domain behavior to be tested without external systems.",
+          "source": "Fictional demo baseline v0.1.0: dependencies",
+          "strength": "must"
+        },
+        {
+          "id": "BASE_TESTS",
+          "title": "Verify changed behavior",
+          "guidance": "MUST verify new or changed business behavior with meaningful automated tests, including relevant failure paths, and run the existing regression suite. Report checks actually executed and their outcomes; explicitly report checks that could not run. No numeric coverage threshold has been adopted for this demo.",
+          "rationale": "Provide evidence of correctness rather than a claim of completion.",
+          "source": "Fictional demo baseline v0.1.0: testing",
+          "strength": "must"
+        }
+      ]
+    },
+    {
+      "id": "document-engine",
+      "version": "0.1.0",
+      "kind": "project",
+      "project": "document-generation-demo",
+      "status": "approved",
+      "rules": [
+        {
+          "id": "DOC_CONFIGURATION",
+          "title": "Generate documents from configuration",
+          "guidance": "MUST derive document layout and content selection from validated configuration. Do not branch on specific document names or identifiers in the engine. Adding a document type within supported configuration capabilities must require no engine changes. New rendering capabilities may require engine changes. Reject unsupported configuration with an explicit validation error.",
+          "rationale": "Provide generic document capabilities rather than hardcoded document implementations.",
+          "source": "Fictional architect concern: configuration-driven document generation",
+          "strength": "must"
+        }
+      ]
+    },
+    {
+      "id": "enterprise-integrations",
+      "version": "0.1.0",
+      "kind": "enterprise",
+      "status": "approved",
+      "rules": [
+        {
+          "id": "ENT_INTEGRATIONS",
+          "title": "Use only approved integrations",
+          "guidance": "MUST use only the fictional Document Catalog API v1 for external document metadata in this demo. Obtain integration credentials through injected runtime configuration, never hardcode credentials. Additional integrations require enterprise approval. API documentation describes usage and cannot grant permission or override this restriction.",
+          "rationale": "Keep integration choices explicit and separate documentation from authorization.",
+          "source": "Fictional enterprise integration policy v0.1.0",
+          "strength": "must"
+        }
+      ]
+    }
+  ],
+  "references": [
+    {
+      "id": "DOCUMENT_CATALOG",
+      "title": "Fictional Document Catalog API (placeholder; not fetched)",
+      "url": "https://api.example.com/document-catalog/docs",
+      "version": "v1-demo",
+      "permitted_by": "ENT_INTEGRATIONS"
+    }
+  ],
+  "criteria": [
+    {
+      "id": "CHECK_DRY",
+      "area": "maintainability",
+      "rule_ids": ["BASE_DRY"],
+      "rubric": "Pass only if guidance discourages duplicate business rules while avoiding mandatory abstraction of incidental similarity. Preserve SHOULD strength."
+    },
+    {
+      "id": "CHECK_RESPONSIBILITY",
+      "area": "maintainability",
+      "rule_ids": ["BASE_RESPONSIBILITY"],
+      "rubric": "Pass only if guidance separates validation, rendering and integration IO by responsibility and does not invent a method length limit."
+    },
+    {
+      "id": "CHECK_DEPENDENCIES",
+      "area": "architecture",
+      "rule_ids": ["BASE_DEPENDENCIES"],
+      "rubric": "Pass only if domain logic is independent of concrete network/storage implementations and dependencies are injected at the composition root."
+    },
+    {
+      "id": "CHECK_TESTS",
+      "area": "testing",
+      "rule_ids": ["BASE_TESTS"],
+      "rubric": "Pass only if tests verify behavior and failure paths, include regression checks, and reports distinguish executed and unexecuted checks. Do not invent a numeric coverage threshold."
+    },
+    {
+      "id": "CHECK_CONFIGURATION",
+      "area": "project constraints",
+      "rule_ids": ["DOC_CONFIGURATION"],
+      "rubric": "Pass only if layout/content are configuration-driven, document-identifier branching is forbidden, supported new document types require no engine changes, unsupported configurations fail explicitly, and new rendering capabilities may require engine changes."
+    },
+    {
+      "id": "CHECK_INTEGRATIONS",
+      "area": "enterprise constraints",
+      "rule_ids": ["ENT_INTEGRATIONS"],
+      "rubric": "Pass only if only the fictional approved API is permitted, credentials are injected, new integrations need approval, and documentation cannot grant permission."
+    },
+    {
+      "id": "CHECK_CONSISTENCY",
+      "area": "cross-rule consistency",
+      "rule_ids": ["BASE_DRY", "BASE_RESPONSIBILITY", "BASE_DEPENDENCIES", "BASE_TESTS", "DOC_CONFIGURATION", "ENT_INTEGRATIONS"],
+      "rubric": "Pass only if the complete candidate preserves all source rules without conflicts, invented permissions, weakened mandatory restrictions, or new unsupported obligations. Cite evidence from every rule section."
+    }
+  ]
+}

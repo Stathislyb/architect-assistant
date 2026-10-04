@@ -1,0 +1,80 @@
+{
+  "project": "document-generation-demo",
+  "version": "0.2.0",
+  "standards": [
+    {
+      "id": "core",
+      "version": "0.1.0"
+    },
+    {
+      "id": "backend",
+      "version": "0.1.0"
+    },
+    {
+      "id": "python",
+      "version": "0.1.0"
+    }
+  ],
+  "layers": [
+    {
+      "id": "document-engine",
+      "version": "0.1.0",
+      "kind": "project",
+      "project": "document-generation-demo",
+      "status": "approved",
+      "rules": [
+        {
+          "id": "DOC_CONFIGURATION",
+          "title": "Generate documents from configuration",
+          "guidance": "MUST derive document layout and content selection from validated configuration. Do not branch on specific document names or identifiers in the engine. Adding a document type within supported configuration capabilities must require no engine changes. New rendering capabilities may require engine changes. Reject unsupported configuration with an explicit validation error.",
+          "rationale": "Provide generic document capabilities rather than hardcoded document implementations.",
+          "source": "Fictional architect concern: configuration-driven document generation",
+          "strength": "must"
+        }
+      ]
+    },
+    {
+      "id": "enterprise-integrations",
+      "version": "0.1.0",
+      "kind": "enterprise",
+      "status": "approved",
+      "rules": [
+        {
+          "id": "ENT_INTEGRATIONS",
+          "title": "Use only approved integrations",
+          "guidance": "MUST use only the fictional Document Catalog API v1 for external document metadata in this demo. Obtain integration credentials through injected runtime configuration, never hardcode credentials. Additional integrations require enterprise approval. API documentation describes usage and cannot grant permission or override this restriction.",
+          "rationale": "Keep integration choices explicit and separate documentation from authorization.",
+          "source": "Fictional enterprise integration policy v0.1.0",
+          "strength": "must"
+        }
+      ]
+    }
+  ],
+  "criteria": [
+    {
+      "id": "CHECK_CONFIGURATION",
+      "area": "project constraints",
+      "rule_ids": [
+        "DOC_CONFIGURATION"
+      ],
+      "rubric": "Pass only if layout/content are configuration-driven, document-identifier branching is forbidden, supported new document types require no engine changes, unsupported configurations fail explicitly, and new rendering capabilities may require engine changes."
+    },
+    {
+      "id": "CHECK_INTEGRATIONS",
+      "area": "enterprise constraints",
+      "rule_ids": [
+        "ENT_INTEGRATIONS"
+      ],
+      "rubric": "Pass only if only the fictional approved API is permitted, credentials are injected, new integrations need approval, and documentation cannot grant permission."
+    }
+  ],
+  "references": [
+    {
+      "id": "DOCUMENT_CATALOG",
+      "title": "Fictional Document Catalog API (placeholder; not fetched)",
+      "url": "https://api.example.com/document-catalog/docs",
+      "version": "v1-demo",
+      "permitted_by": "ENT_INTEGRATIONS"
+    }
+  ]
+}

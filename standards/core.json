@@ -1,0 +1,390 @@
+{
+  "id": "core",
+  "version": "0.1.0",
+  "description": "General architecture, maintainability, testing, security and delivery. Review applicability before adoption.",
+  "requires": [],
+  "rules": [
+    {
+      "id": "CORE_RESPONSIBILITY",
+      "title": "Separate coherent responsibilities",
+      "guidance": "SHOULD separate business rules, presentation and infrastructure. Keep methods focused on a coherent responsibility; do not enforce arbitrary method-length limits.",
+      "rationale": "Make changes understandable.",
+      "source": "https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/architectural-principles",
+      "strength": "should",
+      "category": "core",
+      "verification": [
+        "Responsibility and dependency review"
+      ]
+    },
+    {
+      "id": "CORE_DEPENDENCIES",
+      "title": "Invert infrastructure dependencies",
+      "guidance": "SHOULD keep business logic independent of concrete IO implementations. Supply infrastructure through explicit interfaces and injection at composition boundaries; do not add interfaces without a useful boundary.",
+      "rationale": "Keep domain behavior independently testable.",
+      "source": "https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/architectural-principles",
+      "strength": "should",
+      "category": "core",
+      "verification": [
+        "Dependency-boundary checks"
+      ]
+    },
+    {
+      "id": "CORE_DRY",
+      "title": "Keep knowledge authoritative",
+      "guidance": "SHOULD reuse authoritative business rules rather than copy them. Similar syntax alone does not justify coupling unrelated concepts through an abstraction.",
+      "rationale": "Avoid inconsistent rules and premature abstraction.",
+      "source": "https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/architectural-principles",
+      "strength": "should",
+      "category": "core",
+      "verification": [
+        "Business-rule duplication review"
+      ]
+    },
+    {
+      "id": "CORE_SIMPLICITY",
+      "title": "Solve the current problem",
+      "guidance": "SHOULD use the simplest design meeting approved requirements. Avoid speculative features, unnecessary layers and unmeasured microservice splits.",
+      "rationale": "Control maintenance cost.",
+      "source": "https://google.github.io/eng-practices/review/reviewer/looking-for.html",
+      "strength": "should",
+      "category": "core",
+      "verification": [
+        "Complexity review"
+      ]
+    },
+    {
+      "id": "CORE_CLARITY",
+      "title": "Make code understandable",
+      "guidance": "SHOULD use domain-relevant names and straightforward control flow. Explain non-obvious decisions in comments; remove misleading or obsolete comments.",
+      "rationale": "Help future maintainers reason accurately.",
+      "source": "https://google.github.io/eng-practices/review/reviewer/looking-for.html",
+      "strength": "should",
+      "category": "core",
+      "verification": [
+        "Naming and comment review"
+      ]
+    },
+    {
+      "id": "CORE_DOCUMENTATION",
+      "title": "Keep usage documentation current",
+      "guidance": "MUST update relevant setup, API, configuration and operational documentation when behavior changes. Explain compatibility impacts and migrations where applicable.",
+      "rationale": "Keep users and operators informed.",
+      "source": "https://google.github.io/eng-practices/review/reviewer/looking-for.html",
+      "strength": "must",
+      "category": "core",
+      "verification": [
+        "Documentation diff review"
+      ]
+    },
+    {
+      "id": "CORE_FOCUSED_CHANGES",
+      "title": "Keep changes reviewable",
+      "guidance": "SHOULD keep changes focused on the requested outcome. Separate unrelated refactoring or formatting and explain unavoidable scope expansion.",
+      "rationale": "Make review and rollback practical.",
+      "source": "https://google.github.io/eng-practices/review/developer/small-cls.html",
+      "strength": "should",
+      "category": "core",
+      "verification": [
+        "Change-scope review"
+      ]
+    },
+    {
+      "id": "CORE_STYLE",
+      "title": "Follow adopted repository conventions",
+      "guidance": "MUST use the repository's configured style and checks. Do not introduce conflicting conventions or suppress diagnostics without explaining the reason.",
+      "rationale": "Maintain consistent code health.",
+      "source": "https://google.github.io/eng-practices/review/reviewer/standard.html",
+      "strength": "must",
+      "category": "core",
+      "verification": [
+        "Configured formatter and linter"
+      ]
+    },
+    {
+      "id": "CORE_BEHAVIOR_TESTS",
+      "title": "Test meaningful behavior",
+      "guidance": "MUST add tests for changed behavior, failures and important boundaries. Choose unit, integration or end-to-end tests according to risk; assert outcomes rather than implementation trivia.",
+      "rationale": "Catch meaningful regressions.",
+      "source": "https://martinfowler.com/articles/practical-test-pyramid.html",
+      "strength": "must",
+      "category": "core",
+      "verification": [
+        "Unit, integration and end-to-end suites"
+      ]
+    },
+    {
+      "id": "CORE_TEST_ISOLATION",
+      "title": "Keep tests independent",
+      "guidance": "MUST make tests independent of execution order and leftover state. Control time, randomness and external services where feasible, while retaining representative integration tests.",
+      "rationale": "Reduce misleading failures and passes.",
+      "source": "https://martinfowler.com/articles/practical-test-pyramid.html",
+      "strength": "must",
+      "category": "core",
+      "verification": [
+        "Repeat tests in different order"
+      ]
+    },
+    {
+      "id": "CORE_COVERAGE",
+      "title": "Use coverage to find gaps",
+      "guidance": "MUST meet explicitly adopted coverage targets and review untested critical paths. Do not invent a universal percentage or equate coverage with correctness.",
+      "rationale": "Focus testing effort on risk.",
+      "source": "https://testing.googleblog.com/2020/08/code-coverage-best-practices.html",
+      "strength": "must",
+      "category": "core",
+      "verification": [
+        "Coverage report and critical-path review"
+      ]
+    },
+    {
+      "id": "CORE_VERIFICATION_EVIDENCE",
+      "title": "Report checks honestly",
+      "guidance": "MUST run applicable repository checks before reporting completion. State executed checks, failures and checks that could not run; never infer a pass from an unexecuted check.",
+      "rationale": "Ground completion in evidence.",
+      "source": "https://google.github.io/eng-practices/review/reviewer/standard.html",
+      "strength": "must",
+      "category": "core",
+      "verification": [
+        "Review recorded check outcomes"
+      ]
+    },
+    {
+      "id": "CORE_CONFIGURATION",
+      "title": "Separate deployment configuration",
+      "guidance": "MUST read deployment-specific values through the approved configuration mechanism. Validate required values at startup; keep stable business rules in code or governed domain configuration.",
+      "rationale": "Avoid environment-specific code changes.",
+      "source": "https://12factor.net/config",
+      "strength": "must",
+      "category": "core",
+      "verification": [
+        "Configuration validation tests"
+      ]
+    },
+    {
+      "id": "CORE_SECRETS",
+      "title": "Protect credentials",
+      "guidance": "MUST obtain credentials from approved secret mechanisms. Do not commit, hardcode or expose secrets in generated artifacts; use scoped credentials and the organization's rotation process.",
+      "rationale": "Limit credential exposure.",
+      "source": "https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html",
+      "strength": "must",
+      "category": "core",
+      "verification": [
+        "Secret scanning and credential review"
+      ]
+    },
+    {
+      "id": "CORE_SAFE_LOGGING",
+      "title": "Log useful context safely",
+      "guidance": "MUST record relevant operational and security events with correlation context. Redact credentials and sensitive data; avoid logging complete request bodies by default.",
+      "rationale": "Support diagnosis without leaking data.",
+      "source": "https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html",
+      "strength": "must",
+      "category": "core",
+      "verification": [
+        "Log-redaction tests"
+      ]
+    },
+    {
+      "id": "CORE_DEPENDENCY_DECLARATION",
+      "title": "Make builds reproducible",
+      "guidance": "MUST declare dependencies and supported runtime versions. Use the ecosystem's lock or constraint mechanism where appropriate; avoid undeclared machine-global dependencies.",
+      "rationale": "Reduce environment drift.",
+      "source": "https://12factor.net/dependencies",
+      "strength": "must",
+      "category": "core",
+      "verification": [
+        "Clean-environment build"
+      ]
+    },
+    {
+      "id": "CORE_DEPENDENCY_SECURITY",
+      "title": "Review dependency risk",
+      "guidance": "SHOULD prefer maintained dependencies and review vulnerabilities, provenance and applicable licenses before adoption. Do not silently add a dependency when existing capabilities suffice.",
+      "rationale": "Control supply-chain and maintenance exposure.",
+      "source": "https://cheatsheetseries.owasp.org/cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.html",
+      "strength": "should",
+      "category": "core",
+      "verification": [
+        "Dependency scanning and adoption review"
+      ]
+    },
+    {
+      "id": "CORE_FAILURE_HANDLING",
+      "title": "Make failures explicit",
+      "guidance": "MUST distinguish expected errors from faults. Recover only when recovery is safe; do not swallow failures or expose internal exception details to users.",
+      "rationale": "Preserve reliable failure behavior.",
+      "source": "https://cheatsheetseries.owasp.org/cheatsheets/Error_Handling_Cheat_Sheet.html",
+      "strength": "must",
+      "category": "core",
+      "verification": [
+        "Failure-path tests"
+      ]
+    },
+    {
+      "id": "CORE_ENVIRONMENT_PARITY",
+      "title": "Keep environments representative",
+      "guidance": "SHOULD keep test and deployment dependencies and configuration behavior sufficiently aligned to detect integration failures. Document unavoidable differences.",
+      "rationale": "Avoid production-only surprises.",
+      "source": "https://12factor.net/dev-prod-parity",
+      "strength": "should",
+      "category": "core",
+      "verification": [
+        "Deployment configuration review"
+      ]
+    }
+  ],
+  "criteria": [
+    {
+      "id": "CHECK_CORE_RESPONSIBILITY",
+      "area": "core",
+      "rule_ids": [
+        "CORE_RESPONSIBILITY"
+      ],
+      "rubric": "Pass only if the generated guidance separates responsibilities without arbitrary size limits. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_CORE_DEPENDENCIES",
+      "area": "core",
+      "rule_ids": [
+        "CORE_DEPENDENCIES"
+      ],
+      "rubric": "Pass only if the generated guidance keeps domain dependencies explicit without mandatory wrappers everywhere. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_CORE_DRY",
+      "area": "core",
+      "rule_ids": [
+        "CORE_DRY"
+      ],
+      "rubric": "Pass only if the generated guidance addresses duplicated business knowledge while allowing incidental similarity. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_CORE_SIMPLICITY",
+      "area": "core",
+      "rule_ids": [
+        "CORE_SIMPLICITY"
+      ],
+      "rubric": "Pass only if the generated guidance discourages speculative complexity while allowing justified design choices. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_CORE_CLARITY",
+      "area": "core",
+      "rule_ids": [
+        "CORE_CLARITY"
+      ],
+      "rubric": "Pass only if the generated guidance requires understandable names and useful explanations. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_CORE_DOCUMENTATION",
+      "area": "core",
+      "rule_ids": [
+        "CORE_DOCUMENTATION"
+      ],
+      "rubric": "Pass only if the generated guidance requires documentation for changed usage and compatibility. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_CORE_FOCUSED_CHANGES",
+      "area": "core",
+      "rule_ids": [
+        "CORE_FOCUSED_CHANGES"
+      ],
+      "rubric": "Pass only if the generated guidance limits unrelated changes while allowing explained scope expansion. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_CORE_STYLE",
+      "area": "core",
+      "rule_ids": [
+        "CORE_STYLE"
+      ],
+      "rubric": "Pass only if the generated guidance uses adopted conventions and requires justified suppressions. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_CORE_BEHAVIOR_TESTS",
+      "area": "core",
+      "rule_ids": [
+        "CORE_BEHAVIOR_TESTS"
+      ],
+      "rubric": "Pass only if the generated guidance requires risk-appropriate behavior tests and failure scenarios. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_CORE_TEST_ISOLATION",
+      "area": "core",
+      "rule_ids": [
+        "CORE_TEST_ISOLATION"
+      ],
+      "rubric": "Pass only if the generated guidance requires isolated tests without replacing every integration with mocks. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_CORE_COVERAGE",
+      "area": "core",
+      "rule_ids": [
+        "CORE_COVERAGE"
+      ],
+      "rubric": "Pass only if the generated guidance preserves adopted targets and distinguishes coverage from correctness. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_CORE_VERIFICATION_EVIDENCE",
+      "area": "core",
+      "rule_ids": [
+        "CORE_VERIFICATION_EVIDENCE"
+      ],
+      "rubric": "Pass only if the generated guidance requires evidence and disclosure of unavailable verification. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_CORE_CONFIGURATION",
+      "area": "core",
+      "rule_ids": [
+        "CORE_CONFIGURATION"
+      ],
+      "rubric": "Pass only if the generated guidance separates deployment settings without treating all constants as environment variables. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_CORE_SECRETS",
+      "area": "core",
+      "rule_ids": [
+        "CORE_SECRETS"
+      ],
+      "rubric": "Pass only if the generated guidance forbids embedded secrets and preserves scoped secret handling. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_CORE_SAFE_LOGGING",
+      "area": "core",
+      "rule_ids": [
+        "CORE_SAFE_LOGGING"
+      ],
+      "rubric": "Pass only if the generated guidance balances diagnostic evidence with redaction. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_CORE_DEPENDENCY_DECLARATION",
+      "area": "core",
+      "rule_ids": [
+        "CORE_DEPENDENCY_DECLARATION"
+      ],
+      "rubric": "Pass only if the generated guidance requires explicit dependencies and reproducible installation. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_CORE_DEPENDENCY_SECURITY",
+      "area": "core",
+      "rule_ids": [
+        "CORE_DEPENDENCY_SECURITY"
+      ],
+      "rubric": "Pass only if the generated guidance requires dependency risk review without blanket bans. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_CORE_FAILURE_HANDLING",
+      "area": "core",
+      "rule_ids": [
+        "CORE_FAILURE_HANDLING"
+      ],
+      "rubric": "Pass only if the generated guidance requires explicit failure handling and safe public errors. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_CORE_ENVIRONMENT_PARITY",
+      "area": "core",
+      "rule_ids": [
+        "CORE_ENVIRONMENT_PARITY"
+      ],
+      "rubric": "Pass only if the generated guidance requires representative environments without identical credentials or data. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    }
+  ]
+}

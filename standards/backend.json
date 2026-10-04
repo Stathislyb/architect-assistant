@@ -1,0 +1,252 @@
+{
+  "id": "backend",
+  "version": "0.1.0",
+  "description": "Server-side applications and APIs. Conditional clauses apply only where the relevant capability exists.",
+  "requires": [
+    "core"
+  ],
+  "rules": [
+    {
+      "id": "BE_AUTHORIZATION",
+      "title": "Authorize every protected operation",
+      "guidance": "MUST enforce authorization at trusted server boundaries for every protected operation and resource, including tenant scope. Deny access when no permission is established; client checks are insufficient.",
+      "rationale": "Prevent cross-user and cross-tenant access.",
+      "source": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+      "strength": "must",
+      "category": "backend",
+      "verification": [
+        "Positive and negative authorization tests"
+      ]
+    },
+    {
+      "id": "BE_LEAST_PRIVILEGE",
+      "title": "Limit service permissions",
+      "guidance": "MUST use only the permissions a service or job needs. Separate privileged operations and test authorization changes; possession of an identifier does not grant access.",
+      "rationale": "Constrain access failures.",
+      "source": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+      "strength": "must",
+      "category": "backend",
+      "verification": [
+        "Permission and role review"
+      ]
+    },
+    {
+      "id": "BE_INPUT_VALIDATION",
+      "title": "Validate external input",
+      "guidance": "MUST validate untrusted input at server boundaries for type, size, shape and domain constraints. Reject invalid data predictably; validation does not replace output encoding or authorization.",
+      "rationale": "Keep invalid data outside domain operations.",
+      "source": "https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html",
+      "strength": "must",
+      "category": "backend",
+      "verification": [
+        "Boundary and malformed-input tests"
+      ]
+    },
+    {
+      "id": "BE_PARAMETERIZED_QUERIES",
+      "title": "Parameterize database access",
+      "guidance": "MUST use parameterized queries or safely bound ORM parameters for untrusted values. Allowlist dynamic identifiers that cannot be parameterized; never concatenate input into query syntax.",
+      "rationale": "Prevent query injection.",
+      "source": "https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html",
+      "strength": "must",
+      "category": "backend",
+      "verification": [
+        "Query review and injection tests"
+      ]
+    },
+    {
+      "id": "BE_API_CONTRACTS",
+      "title": "Preserve explicit API contracts",
+      "guidance": "MUST define request, response and error contracts with appropriate HTTP semantics. Review compatibility before changes; document approved versioning or migration steps for breaking changes.",
+      "rationale": "Keep integrations dependable.",
+      "source": "https://learn.microsoft.com/en-us/azure/architecture/best-practices/api-design",
+      "strength": "must",
+      "category": "backend",
+      "verification": [
+        "Contract and compatibility tests"
+      ]
+    },
+    {
+      "id": "BE_BOUNDED_REQUESTS",
+      "title": "Bound collection and payload work",
+      "guidance": "MUST use explicit pagination or documented limits for potentially large collections. Bound accepted payloads and avoid unbounded work driven by a single request.",
+      "rationale": "Control resource consumption.",
+      "source": "https://learn.microsoft.com/en-us/azure/architecture/best-practices/api-design",
+      "strength": "must",
+      "category": "backend",
+      "verification": [
+        "Large-input and pagination tests"
+      ]
+    },
+    {
+      "id": "BE_TRANSPORT_SECURITY",
+      "title": "Protect API transport and output",
+      "guidance": "MUST use approved secure transport for sensitive API traffic. Return safe public errors and avoid leaking stack traces, credentials or internal implementation details.",
+      "rationale": "Protect data in transit and failures.",
+      "source": "https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html",
+      "strength": "must",
+      "category": "backend",
+      "verification": [
+        "Transport and error-response checks"
+      ]
+    },
+    {
+      "id": "BE_OUTBOUND_ACCESS",
+      "title": "Constrain user-influenced outbound calls",
+      "guidance": "MUST restrict user-influenced destinations and redirects using validated allowlists or approved network controls. Do not permit arbitrary access to internal services or metadata endpoints.",
+      "rationale": "Prevent server-side request forgery.",
+      "source": "https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html",
+      "strength": "must",
+      "category": "backend",
+      "verification": [
+        "SSRF and redirect tests"
+      ]
+    },
+    {
+      "id": "BE_RETRIES",
+      "title": "Bound retries and deadlines",
+      "guidance": "MUST use deadlines for external IO and retry only classified transient failures with bounded attempts and backoff. Establish idempotency before retrying operations with side effects.",
+      "rationale": "Avoid retry storms and duplicate effects.",
+      "source": "https://learn.microsoft.com/en-us/azure/architecture/patterns/retry",
+      "strength": "must",
+      "category": "backend",
+      "verification": [
+        "Timeout, retry and duplicate-effect tests"
+      ]
+    },
+    {
+      "id": "BE_TRANSACTIONS",
+      "title": "Preserve multi-step invariants",
+      "guidance": "MUST use appropriate transactions for related local writes. For distributed work, define recovery or compensation where needed and account for partial failure; do not assume one global transaction.",
+      "rationale": "Protect consistency during failures.",
+      "source": "https://learn.microsoft.com/en-us/azure/architecture/patterns/compensating-transaction",
+      "strength": "must",
+      "category": "backend",
+      "verification": [
+        "Partial-failure and concurrency tests"
+      ]
+    },
+    {
+      "id": "BE_OBSERVABILITY",
+      "title": "Make service health observable",
+      "guidance": "SHOULD expose useful health and operational signals with latency, failure and saturation context appropriate to the service. Correlate requests across boundaries; avoid sensitive telemetry.",
+      "rationale": "Diagnose degradation before it becomes opaque.",
+      "source": "https://learn.microsoft.com/en-us/azure/architecture/best-practices/monitoring",
+      "strength": "should",
+      "category": "backend",
+      "verification": [
+        "Health-check and telemetry review"
+      ]
+    },
+    {
+      "id": "BE_MIGRATIONS",
+      "title": "Review database migrations",
+      "guidance": "MUST when persistence schemas change, use versioned migrations, inspect generated operations and plan data preservation, compatibility and recovery. Do not assume generated or automatically applied migrations are safe for production.",
+      "rationale": "Protect persisted data during change.",
+      "source": "https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/applying",
+      "strength": "must",
+      "category": "backend",
+      "verification": [
+        "Migration tests and deployment review"
+      ]
+    }
+  ],
+  "criteria": [
+    {
+      "id": "CHECK_BE_AUTHORIZATION",
+      "area": "backend",
+      "rule_ids": [
+        "BE_AUTHORIZATION"
+      ],
+      "rubric": "Pass only if the generated guidance requires resource-level server authorization and default denial. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_BE_LEAST_PRIVILEGE",
+      "area": "backend",
+      "rule_ids": [
+        "BE_LEAST_PRIVILEGE"
+      ],
+      "rubric": "Pass only if the generated guidance requires scoped service privileges and rejects identifier-based permission assumptions. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_BE_INPUT_VALIDATION",
+      "area": "backend",
+      "rule_ids": [
+        "BE_INPUT_VALIDATION"
+      ],
+      "rubric": "Pass only if the generated guidance requires syntactic and domain validation without treating it as complete security. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_BE_PARAMETERIZED_QUERIES",
+      "area": "backend",
+      "rule_ids": [
+        "BE_PARAMETERIZED_QUERIES"
+      ],
+      "rubric": "Pass only if the generated guidance requires bound values and safe handling of dynamic identifiers. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_BE_API_CONTRACTS",
+      "area": "backend",
+      "rule_ids": [
+        "BE_API_CONTRACTS"
+      ],
+      "rubric": "Pass only if the generated guidance requires explicit contracts and reviewed compatibility changes. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_BE_BOUNDED_REQUESTS",
+      "area": "backend",
+      "rule_ids": [
+        "BE_BOUNDED_REQUESTS"
+      ],
+      "rubric": "Pass only if the generated guidance requires appropriate limits without imposing one pagination strategy. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_BE_TRANSPORT_SECURITY",
+      "area": "backend",
+      "rule_ids": [
+        "BE_TRANSPORT_SECURITY"
+      ],
+      "rubric": "Pass only if the generated guidance requires secure transport and safe API errors. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_BE_OUTBOUND_ACCESS",
+      "area": "backend",
+      "rule_ids": [
+        "BE_OUTBOUND_ACCESS"
+      ],
+      "rubric": "Pass only if the generated guidance requires destination controls including redirect and internal-address risks. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_BE_RETRIES",
+      "area": "backend",
+      "rule_ids": [
+        "BE_RETRIES"
+      ],
+      "rubric": "Pass only if the generated guidance requires bounded transient retries and side-effect safety. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_BE_TRANSACTIONS",
+      "area": "backend",
+      "rule_ids": [
+        "BE_TRANSACTIONS"
+      ],
+      "rubric": "Pass only if the generated guidance requires explicit consistency and recovery boundaries. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_BE_OBSERVABILITY",
+      "area": "backend",
+      "rule_ids": [
+        "BE_OBSERVABILITY"
+      ],
+      "rubric": "Pass only if the generated guidance requires useful operational signals without prescribing a telemetry vendor. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_BE_MIGRATIONS",
+      "area": "backend",
+      "rule_ids": [
+        "BE_MIGRATIONS"
+      ],
+      "rubric": "Pass only if the generated guidance requires reviewed migrations and deployment recovery appropriate to the datastore. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    }
+  ]
+}

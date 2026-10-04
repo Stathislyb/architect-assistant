@@ -1,0 +1,13 @@
+{
+  "project": "my-application",
+  "version": "0.1.0",
+  "standards": [
+    {
+      "id": "core",
+      "version": "0.1.0"
+    }
+  ],
+  "layers": [],
+  "criteria": [],
+  "references": []
+}

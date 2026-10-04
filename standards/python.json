@@ -1,0 +1,152 @@
+{
+  "id": "python",
+  "version": "0.1.0",
+  "description": "Python code. Respect the project's supported versions and configured tooling.",
+  "requires": [
+    "core"
+  ],
+  "rules": [
+    {
+      "id": "PY_STYLE",
+      "title": "Use consistent Python conventions",
+      "guidance": "MUST follow configured Python formatting, naming and import conventions. Avoid unrelated style churn and do not require newer syntax than the supported runtime.",
+      "rationale": "Keep code consistent and compatible.",
+      "source": "https://peps.python.org/pep-0008/",
+      "strength": "must",
+      "category": "python",
+      "verification": [
+        "Configured Python formatter and linter"
+      ]
+    },
+    {
+      "id": "PY_TYPES",
+      "title": "Type meaningful boundaries",
+      "guidance": "SHOULD annotate public and complex boundaries with meaningful types. Run the adopted type checker; remember that annotations do not validate untrusted data at runtime.",
+      "rationale": "Clarify contracts without false validation claims.",
+      "source": "https://docs.python.org/3/library/typing.html",
+      "strength": "should",
+      "category": "python",
+      "verification": [
+        "Type checker and boundary validation tests"
+      ]
+    },
+    {
+      "id": "PY_DEFAULT_ARGUMENTS",
+      "title": "Avoid shared mutable defaults",
+      "guidance": "MUST do not use mutable objects as function defaults unless shared state is deliberate and documented. Create per-call containers inside the function where needed.",
+      "rationale": "Prevent state leaking across calls.",
+      "source": "https://docs.python.org/3/tutorial/controlflow.html#default-argument-values",
+      "strength": "must",
+      "category": "python",
+      "verification": [
+        "Repeated-call tests"
+      ]
+    },
+    {
+      "id": "PY_RESOURCE_LIFETIME",
+      "title": "Close resources reliably",
+      "guidance": "MUST use context managers or explicit try/finally ownership for files, connections and other closeable resources. Cleanup must also occur on failure.",
+      "rationale": "Avoid leaked resources.",
+      "source": "https://docs.python.org/3/library/contextlib.html",
+      "strength": "must",
+      "category": "python",
+      "verification": [
+        "Resource and exception-path tests"
+      ]
+    },
+    {
+      "id": "PY_EXCEPTIONS",
+      "title": "Catch errors deliberately",
+      "guidance": "MUST catch specific exceptions when recovery is meaningful. Broad catches belong at explicit containment boundaries; preserve failure information and never silently pass.",
+      "rationale": "Keep error handling explainable.",
+      "source": "https://peps.python.org/pep-0008/",
+      "strength": "must",
+      "category": "python",
+      "verification": [
+        "Exception handling review"
+      ]
+    },
+    {
+      "id": "PY_ASYNC",
+      "title": "Preserve async cancellation",
+      "guidance": "MUST when using asyncio, avoid blocking the event loop with synchronous IO or CPU work. Await owned tasks, bound concurrency and preserve cancellation after cleanup.",
+      "rationale": "Keep asynchronous work responsive and bounded.",
+      "source": "https://docs.python.org/3/library/asyncio-task.html",
+      "strength": "must",
+      "category": "python",
+      "verification": [
+        "Async timeout and cancellation tests"
+      ]
+    },
+    {
+      "id": "PY_SUBPROCESS",
+      "title": "Invoke subprocesses safely",
+      "guidance": "MUST pass subprocess arguments as separate values where practical. Do not interpolate untrusted text into shell commands; set timeouts and inspect return codes when commands affect correctness.",
+      "rationale": "Prevent injection and hanging operations.",
+      "source": "https://docs.python.org/3/library/subprocess.html",
+      "strength": "must",
+      "category": "python",
+      "verification": [
+        "Command-injection and timeout tests"
+      ]
+    }
+  ],
+  "criteria": [
+    {
+      "id": "CHECK_PY_STYLE",
+      "area": "python",
+      "rule_ids": [
+        "PY_STYLE"
+      ],
+      "rubric": "Pass only if the generated guidance requires configured style and runtime-compatible syntax. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_PY_TYPES",
+      "area": "python",
+      "rule_ids": [
+        "PY_TYPES"
+      ],
+      "rubric": "Pass only if the generated guidance distinguishes static types from runtime validation. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_PY_DEFAULT_ARGUMENTS",
+      "area": "python",
+      "rule_ids": [
+        "PY_DEFAULT_ARGUMENTS"
+      ],
+      "rubric": "Pass only if the generated guidance requires safe default arguments with explicit intentional exceptions. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_PY_RESOURCE_LIFETIME",
+      "area": "python",
+      "rule_ids": [
+        "PY_RESOURCE_LIFETIME"
+      ],
+      "rubric": "Pass only if the generated guidance requires failure-safe resource cleanup. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_PY_EXCEPTIONS",
+      "area": "python",
+      "rule_ids": [
+        "PY_EXCEPTIONS"
+      ],
+      "rubric": "Pass only if the generated guidance allows justified containment boundaries while prohibiting swallowed errors. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_PY_ASYNC",
+      "area": "python",
+      "rule_ids": [
+        "PY_ASYNC"
+      ],
+      "rubric": "Pass only if the generated guidance requires nonblocking execution and cancellation-safe task ownership. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_PY_SUBPROCESS",
+      "area": "python",
+      "rule_ids": [
+        "PY_SUBPROCESS"
+      ],
+      "rubric": "Pass only if the generated guidance requires safe argument handling, timeouts and checked outcomes. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    }
+  ]
+}

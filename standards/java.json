@@ -1,0 +1,132 @@
+{
+  "id": "java",
+  "version": "0.1.0",
+  "description": "Java applications. The Oracle tutorials cited for established fundamentals target older JDKs; use APIs supported by the project's declared JDK.",
+  "requires": [
+    "core"
+  ],
+  "rules": [
+    {
+      "id": "JAVA_RESOURCES",
+      "title": "Close resources with ownership",
+      "guidance": "MUST use try-with-resources for owned AutoCloseable resources where appropriate. Preserve primary failures and do not close shared resources owned elsewhere.",
+      "rationale": "Keep cleanup reliable.",
+      "source": "https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html",
+      "strength": "must",
+      "category": "java",
+      "verification": [
+        "Resource failure tests"
+      ]
+    },
+    {
+      "id": "JAVA_GENERICS",
+      "title": "Preserve generic type safety",
+      "guidance": "MUST use parameterized types instead of raw collections. Isolate unavoidable unchecked interop and justify casts rather than spreading unchecked assumptions.",
+      "rationale": "Prevent hidden type mismatches.",
+      "source": "https://docs.oracle.com/javase/tutorial/java/generics/",
+      "strength": "must",
+      "category": "java",
+      "verification": [
+        "Compiler warnings and static analysis"
+      ]
+    },
+    {
+      "id": "JAVA_COLLECTIONS",
+      "title": "Choose collection contracts deliberately",
+      "guidance": "SHOULD choose collections by required ordering, uniqueness and mutation behavior. Avoid exposing mutable internal collections unless that ownership is intentional.",
+      "rationale": "Keep data contracts predictable.",
+      "source": "https://docs.oracle.com/javase/tutorial/collections/",
+      "strength": "should",
+      "category": "java",
+      "verification": [
+        "Collection contract tests"
+      ]
+    },
+    {
+      "id": "JAVA_EXCEPTIONS",
+      "title": "Preserve meaningful exception handling",
+      "guidance": "MUST handle exceptions at meaningful recovery boundaries, preserve causes when translating them, and do not swallow failures or use exceptions for routine branching.",
+      "rationale": "Keep failures diagnosable.",
+      "source": "https://docs.oracle.com/javase/tutorial/essential/exceptions/",
+      "strength": "must",
+      "category": "java",
+      "verification": [
+        "Exception-path tests"
+      ]
+    },
+    {
+      "id": "JAVA_TIME",
+      "title": "Use explicit time semantics",
+      "guidance": "MUST use supported java.time types according to whether a value is an instant, date or zoned time. Make time zones explicit at integration boundaries.",
+      "rationale": "Avoid environment-dependent time interpretation.",
+      "source": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/time/package-summary.html",
+      "strength": "must",
+      "category": "java",
+      "verification": [
+        "Time-zone and boundary tests"
+      ]
+    },
+    {
+      "id": "JAVA_CONCURRENCY",
+      "title": "Control shared state and task ownership",
+      "guidance": "MUST use appropriate concurrency primitives rather than unsynchronized shared mutation. Bound application task execution and define task failure, interruption and cleanup behavior.",
+      "rationale": "Prevent races and unbounded background work.",
+      "source": "https://docs.oracle.com/javase/tutorial/essential/concurrency/",
+      "strength": "must",
+      "category": "java",
+      "verification": [
+        "Concurrency and interruption tests"
+      ]
+    }
+  ],
+  "criteria": [
+    {
+      "id": "CHECK_JAVA_RESOURCES",
+      "area": "java",
+      "rule_ids": [
+        "JAVA_RESOURCES"
+      ],
+      "rubric": "Pass only if the generated guidance requires ownership-aware resource cleanup. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_JAVA_GENERICS",
+      "area": "java",
+      "rule_ids": [
+        "JAVA_GENERICS"
+      ],
+      "rubric": "Pass only if the generated guidance requires generic types and scoped unchecked operations. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_JAVA_COLLECTIONS",
+      "area": "java",
+      "rule_ids": [
+        "JAVA_COLLECTIONS"
+      ],
+      "rubric": "Pass only if the generated guidance requires deliberate collection semantics and ownership. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_JAVA_EXCEPTIONS",
+      "area": "java",
+      "rule_ids": [
+        "JAVA_EXCEPTIONS"
+      ],
+      "rubric": "Pass only if the generated guidance requires meaningful recovery and preserved causes. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_JAVA_TIME",
+      "area": "java",
+      "rule_ids": [
+        "JAVA_TIME"
+      ],
+      "rubric": "Pass only if the generated guidance requires time types and explicit zone semantics. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_JAVA_CONCURRENCY",
+      "area": "java",
+      "rule_ids": [
+        "JAVA_CONCURRENCY"
+      ],
+      "rubric": "Pass only if the generated guidance requires safe state sharing and owned task lifecycles. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    }
+  ]
+}

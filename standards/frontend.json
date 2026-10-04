@@ -1,0 +1,212 @@
+{
+  "id": "frontend",
+  "version": "0.1.0",
+  "description": "Browser applications and user interfaces. Framework-specific implementation remains a project decision.",
+  "requires": [
+    "core"
+  ],
+  "rules": [
+    {
+      "id": "FE_SEMANTIC_HTML",
+      "title": "Use meaningful HTML structure",
+      "guidance": "MUST use native semantic elements and logical headings for content and controls. Add ARIA where needed rather than replacing working native behavior with generic elements.",
+      "rationale": "Support navigation and assistive tools.",
+      "source": "https://www.w3.org/WAI/tutorials/page-structure/",
+      "strength": "must",
+      "category": "frontend",
+      "verification": [
+        "Semantic markup and accessibility review"
+      ]
+    },
+    {
+      "id": "FE_KEYBOARD_FOCUS",
+      "title": "Support keyboard interaction",
+      "guidance": "MUST ensure interactive controls work by keyboard with visible focus and sensible focus order. Manage focus when dialogs or dynamic views change; do not trap users unexpectedly.",
+      "rationale": "Make interactions accessible.",
+      "source": "https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html ; https://www.w3.org/WAI/WCAG22/Understanding/keyboard.html",
+      "strength": "must",
+      "category": "frontend",
+      "verification": [
+        "Keyboard and focus testing"
+      ]
+    },
+    {
+      "id": "FE_ACCESSIBLE_FORMS",
+      "title": "Make forms understandable",
+      "guidance": "MUST give controls accessible names, clear instructions and associated error feedback. Do not rely solely on placeholders or color to convey meaning.",
+      "rationale": "Help users complete forms accurately.",
+      "source": "https://www.w3.org/WAI/tutorials/forms/",
+      "strength": "must",
+      "category": "frontend",
+      "verification": [
+        "Accessibility and invalid-form tests"
+      ]
+    },
+    {
+      "id": "FE_SAFE_CONTENT",
+      "title": "Render untrusted content safely",
+      "guidance": "MUST use context-appropriate escaping through trusted rendering APIs. Avoid raw HTML insertion; sanitize approved rich content with a maintained sanitizer and review allowed contexts.",
+      "rationale": "Prevent browser script injection.",
+      "source": "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html",
+      "strength": "must",
+      "category": "frontend",
+      "verification": [
+        "XSS payload tests and sink review"
+      ]
+    },
+    {
+      "id": "FE_SESSION_ACTIONS",
+      "title": "Respect server security boundaries",
+      "guidance": "MUST treat browser checks as usability only; the server must authorize protected actions. For cookie-authenticated state changes, follow the application's CSRF protection strategy.",
+      "rationale": "Preserve trust boundaries.",
+      "source": "https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html",
+      "strength": "must",
+      "category": "frontend",
+      "verification": [
+        "Unauthorized-action and CSRF tests"
+      ]
+    },
+    {
+      "id": "FE_STATE_OWNERSHIP",
+      "title": "Keep state authoritative",
+      "guidance": "SHOULD assign clear ownership to UI state. Derive values when practical instead of duplicating synchronized state, and prevent contradictory loading or selection states.",
+      "rationale": "Avoid stale and inconsistent interfaces.",
+      "source": "https://react.dev/learn/choosing-the-state-structure",
+      "strength": "should",
+      "category": "frontend",
+      "verification": [
+        "State-transition tests"
+      ]
+    },
+    {
+      "id": "FE_ASYNC_STATES",
+      "title": "Represent asynchronous outcomes",
+      "guidance": "MUST represent loading, empty, success and failure outcomes where applicable. Check HTTP status rather than assuming resolved fetch means success. Cancel or ignore obsolete responses and provide safe recovery.",
+      "rationale": "Keep UI feedback truthful.",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch",
+      "strength": "must",
+      "category": "frontend",
+      "verification": [
+        "Slow, failed and obsolete-response scenarios"
+      ]
+    },
+    {
+      "id": "FE_PERFORMANCE",
+      "title": "Measure user-facing performance",
+      "guidance": "SHOULD measure relevant loading and interaction costs before optimizing. Avoid unnecessary asset weight and repeated expensive work; adopt project-specific budgets where justified.",
+      "rationale": "Optimize the user experience with evidence.",
+      "source": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Performance",
+      "strength": "should",
+      "category": "frontend",
+      "verification": [
+        "Browser performance measurements"
+      ]
+    },
+    {
+      "id": "FE_CLIENT_SECRETS",
+      "title": "Keep server secrets out of browsers",
+      "guidance": "MUST never place server credentials or privileged integration keys in browser bundles or public build-time configuration. Treat browser storage as accessible to scripts; follow the approved token and session strategy.",
+      "rationale": "Preserve the browser trust boundary.",
+      "source": "https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html",
+      "strength": "must",
+      "category": "frontend",
+      "verification": [
+        "Bundle secret scanning and session review"
+      ]
+    },
+    {
+      "id": "FE_RESPONSIVE_LAYOUT",
+      "title": "Support intended viewports",
+      "guidance": "SHOULD keep content and controls usable on supported viewports and zoom levels. Test layout with realistic long content; do not rely on one fixed desktop size.",
+      "rationale": "Keep interfaces usable across devices.",
+      "source": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Responsive_Design",
+      "strength": "should",
+      "category": "frontend",
+      "verification": [
+        "Viewport, zoom and long-content scenarios"
+      ]
+    }
+  ],
+  "criteria": [
+    {
+      "id": "CHECK_FE_SEMANTIC_HTML",
+      "area": "frontend",
+      "rule_ids": [
+        "FE_SEMANTIC_HTML"
+      ],
+      "rubric": "Pass only if the generated guidance requires semantic structure and appropriate native elements. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_FE_KEYBOARD_FOCUS",
+      "area": "frontend",
+      "rule_ids": [
+        "FE_KEYBOARD_FOCUS"
+      ],
+      "rubric": "Pass only if the generated guidance requires keyboard operation and visible managed focus. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_FE_ACCESSIBLE_FORMS",
+      "area": "frontend",
+      "rule_ids": [
+        "FE_ACCESSIBLE_FORMS"
+      ],
+      "rubric": "Pass only if the generated guidance requires labels, instructions and understandable validation feedback. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_FE_SAFE_CONTENT",
+      "area": "frontend",
+      "rule_ids": [
+        "FE_SAFE_CONTENT"
+      ],
+      "rubric": "Pass only if the generated guidance requires safe rendering and constrained rich-content handling. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_FE_SESSION_ACTIONS",
+      "area": "frontend",
+      "rule_ids": [
+        "FE_SESSION_ACTIONS"
+      ],
+      "rubric": "Pass only if the generated guidance requires server enforcement and conditional CSRF protection. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_FE_STATE_OWNERSHIP",
+      "area": "frontend",
+      "rule_ids": [
+        "FE_STATE_OWNERSHIP"
+      ],
+      "rubric": "Pass only if the generated guidance requires clear state ownership without mandating a framework. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_FE_ASYNC_STATES",
+      "area": "frontend",
+      "rule_ids": [
+        "FE_ASYNC_STATES"
+      ],
+      "rubric": "Pass only if the generated guidance requires meaningful status feedback and safe recovery. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_FE_PERFORMANCE",
+      "area": "frontend",
+      "rule_ids": [
+        "FE_PERFORMANCE"
+      ],
+      "rubric": "Pass only if the generated guidance requires measurement and scoped performance budgets. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_FE_CLIENT_SECRETS",
+      "area": "frontend",
+      "rule_ids": [
+        "FE_CLIENT_SECRETS"
+      ],
+      "rubric": "Pass only if the generated guidance forbids shipped server secrets and distinguishes browser storage from a secret store. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_FE_RESPONSIVE_LAYOUT",
+      "area": "frontend",
+      "rule_ids": [
+        "FE_RESPONSIVE_LAYOUT"
+      ],
+      "rubric": "Pass only if the generated guidance requires responsive behavior and realistic content testing. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    }
+  ]
+}

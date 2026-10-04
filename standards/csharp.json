@@ -1,0 +1,112 @@
+{
+  "id": "csharp",
+  "version": "0.1.0",
+  "description": "C#/.NET applications. Apply features only on supported language and runtime versions.",
+  "requires": [
+    "core"
+  ],
+  "rules": [
+    {
+      "id": "CS_STYLE",
+      "title": "Use adopted .NET conventions",
+      "guidance": "MUST follow the repository's .editorconfig and analyzers, and use supported language features. Do not suppress warnings broadly to avoid addressing new defects.",
+      "rationale": "Make conventions enforceable.",
+      "source": "https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions",
+      "strength": "must",
+      "category": "csharp",
+      "verification": [
+        "Configured .NET analyzers"
+      ]
+    },
+    {
+      "id": "CS_NULLABILITY",
+      "title": "Model nullability honestly",
+      "guidance": "MUST enable nullable-reference checking in new code where supported; preserve the project's adoption strategy. Validate external values and avoid unjustified null-forgiving operators.",
+      "rationale": "Reduce hidden null failures.",
+      "source": "https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/null-safety/nullable-reference-types",
+      "strength": "must",
+      "category": "csharp",
+      "verification": [
+        "Nullable compiler diagnostics"
+      ]
+    },
+    {
+      "id": "CS_ASYNC",
+      "title": "Use async end to end",
+      "guidance": "MUST for asynchronous IO paths, use await rather than blocking with Result or Wait. Return Task-like results except required async event handlers; propagate cancellation where supported.",
+      "rationale": "Avoid deadlocks and unowned work.",
+      "source": "https://learn.microsoft.com/en-us/dotnet/csharp/asynchronous-programming/async-scenarios",
+      "strength": "must",
+      "category": "csharp",
+      "verification": [
+        "Async and cancellation tests"
+      ]
+    },
+    {
+      "id": "CS_DISPOSAL",
+      "title": "Dispose owned resources",
+      "guidance": "MUST dispose owned IDisposable or IAsyncDisposable resources using appropriate lifetime scopes. Do not dispose shared dependencies owned by their container or caller.",
+      "rationale": "Avoid leaks and premature disposal.",
+      "source": "https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-dispose",
+      "strength": "must",
+      "category": "csharp",
+      "verification": [
+        "Resource lifetime tests"
+      ]
+    },
+    {
+      "id": "CS_STRING_COMPARISON",
+      "title": "Choose string comparison semantics",
+      "guidance": "MUST specify appropriate comparison behavior. Use ordinal semantics for nonlinguistic identifiers and deliberate culture rules for user-facing language; do not let machine culture decide security identifiers.",
+      "rationale": "Prevent culture-dependent correctness bugs.",
+      "source": "https://learn.microsoft.com/en-us/dotnet/standard/base-types/best-practices-strings",
+      "strength": "must",
+      "category": "csharp",
+      "verification": [
+        "Culture-sensitive comparison tests"
+      ]
+    }
+  ],
+  "criteria": [
+    {
+      "id": "CHECK_CS_STYLE",
+      "area": "csharp",
+      "rule_ids": [
+        "CS_STYLE"
+      ],
+      "rubric": "Pass only if the generated guidance requires adopted conventions and justified diagnostic handling. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_CS_NULLABILITY",
+      "area": "csharp",
+      "rule_ids": [
+        "CS_NULLABILITY"
+      ],
+      "rubric": "Pass only if the generated guidance requires honest nullable contracts and boundary validation. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_CS_ASYNC",
+      "area": "csharp",
+      "rule_ids": [
+        "CS_ASYNC"
+      ],
+      "rubric": "Pass only if the generated guidance requires nonblocking async flow and cancellation propagation. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_CS_DISPOSAL",
+      "area": "csharp",
+      "rule_ids": [
+        "CS_DISPOSAL"
+      ],
+      "rubric": "Pass only if the generated guidance requires disposal according to ownership. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_CS_STRING_COMPARISON",
+      "area": "csharp",
+      "rule_ids": [
+        "CS_STRING_COMPARISON"
+      ],
+      "rubric": "Pass only if the generated guidance distinguishes identifier comparison from linguistic comparison. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "id": "typescript",
+  "version": "0.1.0",
+  "description": "TypeScript applications in browsers or servers. Adopt runtime and framework choices separately.",
+  "requires": [
+    "core"
+  ],
+  "rules": [
+    {
+      "id": "TS_STRICTNESS",
+      "title": "Preserve strict type checking",
+      "guidance": "MUST use strict checking for new TypeScript projects. In established projects, preserve adopted strictness and introduce reviewed migration steps rather than disabling checks to make builds pass.",
+      "rationale": "Keep type guarantees credible.",
+      "source": "https://www.typescriptlang.org/tsconfig/strict.html",
+      "strength": "must",
+      "category": "typescript",
+      "verification": [
+        "TypeScript compiler checks"
+      ]
+    },
+    {
+      "id": "TS_EXTERNAL_DATA",
+      "title": "Validate data before narrowing",
+      "guidance": "MUST treat untrusted boundary data as unknown and validate it before use. Do not claim that a type assertion provides runtime validation.",
+      "rationale": "Avoid trusting compile-time-only claims.",
+      "source": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+      "strength": "must",
+      "category": "typescript",
+      "verification": [
+        "Schema and malformed-input tests"
+      ]
+    },
+    {
+      "id": "TS_EXPLICIT_VARIANTS",
+      "title": "Handle variants exhaustively",
+      "guidance": "SHOULD use discriminated unions or equivalent explicit states where appropriate. Check all supported cases and make unexpected variants visible.",
+      "rationale": "Avoid missing branches as models evolve.",
+      "source": "https://www.typescriptlang.org/docs/handbook/2/narrowing.html",
+      "strength": "should",
+      "category": "typescript",
+      "verification": [
+        "Exhaustiveness and new-variant tests"
+      ]
+    },
+    {
+      "id": "TS_ESCAPE_HATCHES",
+      "title": "Justify type-system escape hatches",
+      "guidance": "MUST avoid broad any, unchecked assertions and suppression directives. Isolate unavoidable interop and explain how its runtime assumptions are verified.",
+      "rationale": "Limit hidden type failures.",
+      "source": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+      "strength": "must",
+      "category": "typescript",
+      "verification": [
+        "Compiler and lint review"
+      ]
+    },
+    {
+      "id": "TS_PROMISE_OWNERSHIP",
+      "title": "Handle promise outcomes",
+      "guidance": "MUST await, return or explicitly handle promises and rejections. Fire-and-forget work needs deliberate ownership and error handling; void alone does not handle a rejection.",
+      "rationale": "Prevent unobserved asynchronous failures.",
+      "source": "https://typescript-eslint.io/rules/no-floating-promises/",
+      "strength": "must",
+      "category": "typescript",
+      "verification": [
+        "Promise lint rules and rejection tests"
+      ]
+    },
+    {
+      "id": "TS_MUTATION",
+      "title": "Make mutation intentional",
+      "guidance": "SHOULD use readonly contracts where callers should not mutate data. Remember that readonly is a compile-time constraint and does not make nested objects immutable at runtime.",
+      "rationale": "Make ownership clear.",
+      "source": "https://www.typescriptlang.org/docs/handbook/2/objects.html",
+      "strength": "should",
+      "category": "typescript",
+      "verification": [
+        "Mutation and ownership review"
+      ]
+    }
+  ],
+  "criteria": [
+    {
+      "id": "CHECK_TS_STRICTNESS",
+      "area": "typescript",
+      "rule_ids": [
+        "TS_STRICTNESS"
+      ],
+      "rubric": "Pass only if the generated guidance requires strict defaults and deliberate existing-project migration. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_TS_EXTERNAL_DATA",
+      "area": "typescript",
+      "rule_ids": [
+        "TS_EXTERNAL_DATA"
+      ],
+      "rubric": "Pass only if the generated guidance requires runtime validation and safe treatment of unknown input. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_TS_EXPLICIT_VARIANTS",
+      "area": "typescript",
+      "rule_ids": [
+        "TS_EXPLICIT_VARIANTS"
+      ],
+      "rubric": "Pass only if the generated guidance requires complete variant handling without one mandatory modeling style. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_TS_ESCAPE_HATCHES",
+      "area": "typescript",
+      "rule_ids": [
+        "TS_ESCAPE_HATCHES"
+      ],
+      "rubric": "Pass only if the generated guidance requires scoped and justified escape hatches. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_TS_PROMISE_OWNERSHIP",
+      "area": "typescript",
+      "rule_ids": [
+        "TS_PROMISE_OWNERSHIP"
+      ],
+      "rubric": "Pass only if the generated guidance requires rejection handling and explicit background-work ownership. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    },
+    {
+      "id": "CHECK_TS_MUTATION",
+      "area": "typescript",
+      "rule_ids": [
+        "TS_MUTATION"
+      ],
+      "rubric": "Pass only if the generated guidance distinguishes readonly contracts from runtime immutability. Preserve the source rule's strength, applicability and exceptions; do not invent additional obligations."
+    }
+  ]
+}
